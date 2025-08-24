@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Fuel, Gauge, Settings, Eye } from 'lucide-react';
-import VehicleModal from '@/components/VehicleModal';
-import { vehicles } from '@/lib/vehicleData';
-import Link from 'next/link';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Fuel, Gauge, Settings, Eye } from "lucide-react";
+import VehicleModal from "@/components/VehicleModal";
+import { vehicles } from "@/lib/vehicleData";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function FeaturedVehicles() {
   const [selectedVehicle, setSelectedVehicle] = useState(null);
@@ -18,9 +19,9 @@ export default function FeaturedVehicles() {
   };
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
       minimumFractionDigits: 0,
     }).format(price);
   };
@@ -36,7 +37,8 @@ export default function FeaturedVehicles() {
               Featured Vehicles
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Discover our handpicked selection of quality vehicles, thoroughly inspected and ready for immediate delivery
+              Discover our handpicked selection of quality vehicles, thoroughly
+              inspected and ready for immediate delivery
             </p>
           </div>
 
@@ -47,11 +49,14 @@ export default function FeaturedVehicles() {
                 className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
               >
                 <div className="relative overflow-hidden">
-                  <img
-                    src={vehicle.image}
+                  <Image
+                    src={vehicle.image[1]}
                     alt={`${vehicle.make} ${vehicle.model}`}
+                    width={1000} // Add a fixed width
+                    height={600} // Add a fixed height
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
+                  
                   {vehicle.featured && (
                     <Badge className="absolute top-4 left-4 bg-orange-600 hover:bg-orange-700">
                       Featured
@@ -103,9 +108,7 @@ export default function FeaturedVehicles() {
               className="bg-orange-600 hover:bg-orange-700 text-white px-8"
               asChild
             >
-              <Link href="/inventory">
-                View All Vehicles
-              </Link>
+              <Link href="/inventory">View All Vehicles</Link>
             </Button>
           </div>
         </div>

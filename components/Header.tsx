@@ -1,34 +1,35 @@
 "use client";
 
-import { useState } from 'react';
-import { usePathname } from 'next/navigation';
-import { Menu, X, Phone, Mail } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { Menu, X, Phone, Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
 
 const navigation = [
-  { name: 'Home', href: '#home' },
-  { name: 'Inventory', href: '#inventory' },
-  { name: 'Services', href: '#services' },
-  { name: 'About Us', href: '#about' },
-  { name: 'Contact', href: '#contact' },
+  { name: "Home", href: "#home" },
+  { name: "Inventory", href: "#inventory" },
+  { name: "Services", href: "#services" },
+  { name: "About Us", href: "#about" },
+  { name: "Contact", href: "#contact" },
 ];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isInventoryPage = pathname === '/inventory';
+  const isInventoryPage = pathname === "/inventory";
 
   const scrollToSection = (href: string) => {
-    if (href === '#inventory') {
-      const element = document.querySelector('#inventory');
+    if (href === "#inventory") {
+      const element = document.querySelector("#inventory");
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: "smooth" });
       }
     } else {
       const element = document.querySelector(href);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: "smooth" });
       }
     }
     setMobileMenuOpen(false);
@@ -37,12 +38,18 @@ export default function Header() {
   return (
     <header className="bg-white shadow-sm fixed w-full top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
+        <div className="flex justify-between items-center py-2">
           {/* Logo */}
+          <Image
+            src="/logo.png"
+            alt="logo"
+            width={50} // The width of the image in pixels
+            height={50} // The height of the image in pixels
+          />
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h2 className="text-1.5xl font-bold text-gray-900">
               MANBEE <span className="text-orange-600">Cars</span>
-            </h1>
+            </h2>
             <p className="ml-4 text-sm text-gray-600 hidden md:block">
               Quality Vehicles at Affordable Prices
             </p>
@@ -58,8 +65,8 @@ export default function Header() {
                 Back to Home
               </Link>
             ) : (
-              navigation.map((item) => (
-                item.href === '#home' ? (
+              navigation.map((item) =>
+                item.href === "#home" ? (
                   <Link
                     key={item.name}
                     href="/"
@@ -67,7 +74,7 @@ export default function Header() {
                   >
                     {item.name}
                   </Link>
-                ) : item.href === '#inventory' ? (
+                ) : item.href === "#inventory" ? (
                   <Link
                     key={item.name}
                     href="/inventory"
@@ -84,23 +91,29 @@ export default function Header() {
                     {item.name}
                   </button>
                 )
-              ))
+              )
             )}
           </nav>
 
           {/* Contact Info & Mobile Menu Button */}
           <div className="flex items-center space-x-4">
             <div className="hidden lg:flex items-center space-x-4 text-sm text-gray-600">
-              <a href="tel:+2348123456789" className="flex items-center hover:text-orange-600">
+              <a
+                href="tel:+2348123456789"
+                className="flex items-center hover:text-orange-600"
+              >
                 <Phone className="w-4 h-4 mr-1" />
                 +234 812 345 6789
               </a>
-              <a href="mailto:info@manbeecars.com" className="flex items-center hover:text-orange-600">
+              <a
+                href="mailto:info@manbeecars.com"
+                className="flex items-center hover:text-orange-600"
+              >
                 <Mail className="w-4 h-4 mr-1" />
                 info@manbeecars.com
               </a>
             </div>
-            
+
             <Button
               variant="ghost"
               size="icon"
@@ -130,8 +143,8 @@ export default function Header() {
                 Back to Home
               </Link>
             ) : (
-              navigation.map((item) => (
-                item.href === '#home' ? (
+              navigation.map((item) =>
+                item.href === "#home" ? (
                   <Link
                     key={item.name}
                     href="/"
@@ -140,7 +153,7 @@ export default function Header() {
                   >
                     {item.name}
                   </Link>
-                ) : item.href === '#inventory' ? (
+                ) : item.href === "#inventory" ? (
                   <Link
                     key={item.name}
                     href="/inventory"
@@ -158,14 +171,20 @@ export default function Header() {
                     {item.name}
                   </button>
                 )
-              ))
+              )
             )}
             <div className="pt-4 border-t space-y-2">
-              <a href="tel:+2348123456789" className="flex items-center text-gray-600 hover:text-orange-600">
+              <a
+                href="tel:+2348123456789"
+                className="flex items-center text-gray-600 hover:text-orange-600"
+              >
                 <Phone className="w-4 h-4 mr-2" />
                 +234 812 345 6789
               </a>
-              <a href="mailto:info@manbeecars.com" className="flex items-center text-gray-600 hover:text-orange-600">
+              <a
+                href="mailto:info@manbeecars.com"
+                className="flex items-center text-gray-600 hover:text-orange-600"
+              >
                 <Mail className="w-4 h-4 mr-2" />
                 info@manbeecars.com
               </a>

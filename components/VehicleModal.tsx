@@ -39,7 +39,7 @@ export default function VehicleModal({ vehicle, isOpen, onClose }: VehicleModalP
   };
 
   // For demo purposes, we'll use the same image multiple times
-  const images = [vehicle.image, vehicle.image, vehicle.image];
+  const images = [vehicle.image[0], vehicle.image[1], vehicle.image[2]];
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
