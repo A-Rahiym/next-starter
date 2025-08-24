@@ -1,22 +1,28 @@
 "use client";
 
-import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { 
-  Fuel, 
-  Gauge, 
-  Settings, 
-  Calendar, 
-  Car, 
-  Shield, 
-  MessageSquare, 
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
+import {
+  Fuel,
+  Gauge,
+  Settings,
+  Calendar,
+  Car,
+  Shield,
+  MessageSquare,
   Phone,
   ChevronLeft,
-  ChevronRight
-} from 'lucide-react';
-import InquiryModal from '@/components/InquiryModal';
+  ChevronRight,
+} from "lucide-react";
+import InquiryModal from "@/components/InquiryModal";
 
 interface VehicleModalProps {
   vehicle: any;
@@ -24,16 +30,20 @@ interface VehicleModalProps {
   onClose: () => void;
 }
 
-export default function VehicleModal({ vehicle, isOpen, onClose }: VehicleModalProps) {
+export default function VehicleModal({
+  vehicle,
+  isOpen,
+  onClose,
+}: VehicleModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showInquiryModal, setShowInquiryModal] = useState(false);
 
   if (!vehicle) return null;
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
       minimumFractionDigits: 0,
     }).format(price);
   };
@@ -56,9 +66,9 @@ export default function VehicleModal({ vehicle, isOpen, onClose }: VehicleModalP
   const openBooking = () => {
     onClose(); // Close the vehicle modal first
     setTimeout(() => {
-      const element = document.querySelector('#contact');
+      const element = document.querySelector("#contact");
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: "smooth" });
       }
     }, 100);
   };
@@ -77,12 +87,16 @@ export default function VehicleModal({ vehicle, isOpen, onClose }: VehicleModalP
             {/* Image Gallery */}
             <div className="space-y-4">
               <div className="relative rounded-lg overflow-hidden">
-                <img
+                <Image
                   src={images[currentImageIndex]}
-                  alt={`${vehicle.make} ${vehicle.model} - Image ${currentImageIndex + 1}`}
+                  alt={`${vehicle.make} ${vehicle.model} - Image ${
+                    currentImageIndex + 1
+                  }`}
+                  width={800} // Example width, adjust as needed
+                  height={600} // Example height, adjust as needed
                   className="w-full h-64 object-cover"
                 />
-                
+
                 {images.length > 1 && (
                   <>
                     <button
@@ -115,12 +129,16 @@ export default function VehicleModal({ vehicle, isOpen, onClose }: VehicleModalP
                       key={index}
                       onClick={() => setCurrentImageIndex(index)}
                       className={`w-20 h-16 rounded border-2 overflow-hidden ${
-                        index === currentImageIndex ? 'border-orange-500' : 'border-gray-200'
+                        index === currentImageIndex
+                          ? "border-orange-500"
+                          : "border-gray-200"
                       }`}
                     >
-                      <img
+                      <Image
                         src={image}
                         alt={`Thumbnail ${index + 1}`}
+                        width={150} // Adjust width as needed for your design
+                        height={100} // Adjust height as needed for your design
                         className="w-full h-full object-cover"
                       />
                     </button>
@@ -149,29 +167,41 @@ export default function VehicleModal({ vehicle, isOpen, onClose }: VehicleModalP
                 </div>
                 <div className="flex items-center space-x-2">
                   <Fuel className="w-5 h-5 text-gray-500" />
-                  <span className="text-sm text-gray-600">{vehicle.fuelType}</span>
+                  <span className="text-sm text-gray-600">
+                    {vehicle.fuelType}
+                  </span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Settings className="w-5 h-5 text-gray-500" />
-                  <span className="text-sm text-gray-600">{vehicle.transmission}</span>
+                  <span className="text-sm text-gray-600">
+                    {vehicle.transmission}
+                  </span>
                 </div>
               </div>
 
               {/* Additional Details */}
               <div className="border-t pt-4">
-                <h4 className="font-semibold text-gray-900 mb-3">Vehicle Details</h4>
+                <h4 className="font-semibold text-gray-900 mb-3">
+                  Vehicle Details
+                </h4>
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div>
                     <span className="text-gray-600">Body Type:</span>
-                    <span className="ml-2 text-gray-900">{vehicle.bodyType || 'Sedan'}</span>
+                    <span className="ml-2 text-gray-900">
+                      {vehicle.bodyType || "Sedan"}
+                    </span>
                   </div>
                   <div>
                     <span className="text-gray-600">Color:</span>
-                    <span className="ml-2 text-gray-900">{vehicle.color || 'Black'}</span>
+                    <span className="ml-2 text-gray-900">
+                      {vehicle.color || "Black"}
+                    </span>
                   </div>
                   <div>
                     <span className="text-gray-600">Engine:</span>
-                    <span className="ml-2 text-gray-900">{vehicle.engine || '2.0L'}</span>
+                    <span className="ml-2 text-gray-900">
+                      {vehicle.engine || "2.0L"}
+                    </span>
                   </div>
                   <div>
                     <span className="text-gray-600">Condition:</span>
@@ -182,7 +212,9 @@ export default function VehicleModal({ vehicle, isOpen, onClose }: VehicleModalP
 
               {/* Features */}
               <div className="border-t pt-4">
-                <h4 className="font-semibold text-gray-900 mb-3">Key Features</h4>
+                <h4 className="font-semibold text-gray-900 mb-3">
+                  Key Features
+                </h4>
                 <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
                   <div className="flex items-center">
                     <Shield className="w-4 h-4 mr-2 text-green-500" />
@@ -213,7 +245,7 @@ export default function VehicleModal({ vehicle, isOpen, onClose }: VehicleModalP
                   <MessageSquare className="w-4 h-4 mr-2" />
                   Inquire About This Vehicle
                 </Button>
-                
+
                 <div className="grid grid-cols-2 gap-3">
                   <Button
                     onClick={openBooking}
@@ -228,7 +260,11 @@ export default function VehicleModal({ vehicle, isOpen, onClose }: VehicleModalP
                     asChild
                   >
                     <a
-                      href={`https://wa.me/2348123456789?text=Hi%2C%20I'm%20interested%20in%20the%20${vehicle.make}%20${vehicle.model}%20${vehicle.year}%20priced%20at%20${formatPrice(vehicle.price)}`}
+                      href={`https://wa.me/2348123456789?text=Hi%2C%20I'm%20interested%20in%20the%20${
+                        vehicle.make
+                      }%20${vehicle.model}%20${
+                        vehicle.year
+                      }%20priced%20at%20${formatPrice(vehicle.price)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >

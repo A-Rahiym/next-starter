@@ -1,23 +1,30 @@
 "use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Fuel, Gauge, Settings, Eye, Search, Filter } from 'lucide-react';
-import VehicleModal from '@/components/VehicleModal';
-import { vehicles } from '@/lib/vehicleData';
-import Link from 'next/link';
-import Header from '@/components/Header';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Fuel, Gauge, Settings, Eye, Search, Filter } from "lucide-react";
+import VehicleModal from "@/components/VehicleModal";
+import { vehicles } from "@/lib/vehicleData";
+import Link from "next/link";
+import Header from "@/components/Header";
+import Image from "next/image";
 
 export default function InventoryPage() {
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [makeFilter, setMakeFilter] = useState('all');
-  const [priceFilter, setPriceFilter] = useState('all');
-  const [yearFilter, setYearFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [makeFilter, setMakeFilter] = useState("all");
+  const [priceFilter, setPriceFilter] = useState("all");
+  const [yearFilter, setYearFilter] = useState("all");
 
   const openVehicleModal = (vehicle: any) => {
     setSelectedVehicle(vehicle);
@@ -25,42 +32,55 @@ export default function InventoryPage() {
   };
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
       minimumFractionDigits: 0,
     }).format(price);
   };
 
   // Get unique makes for filter
-  const uniqueMakes = [...new Set(vehicles.map(vehicle => vehicle.make))];
+  const uniqueMakes = [...new Set(vehicles.map((vehicle) => vehicle.make))];
 
   // Filter vehicles based on search and filters
-  const filteredVehicles = vehicles.filter(vehicle => {
-    const matchesSearch = searchTerm === '' || 
-      `${vehicle.make} ${vehicle.model} ${vehicle.year}`.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesMake = makeFilter === 'all' || vehicle.make === makeFilter;
-    
-    const matchesPrice = priceFilter === 'all' || 
-      (priceFilter === 'under-5m' && vehicle.price < 5000000) ||
-      (priceFilter === '5m-10m' && vehicle.price >= 5000000 && vehicle.price <= 10000000) ||
-      (priceFilter === '10m-15m' && vehicle.price >= 10000000 && vehicle.price <= 15000000) ||
-      (priceFilter === 'over-15m' && vehicle.price > 15000000);
-    
-    const matchesYear = yearFilter === 'all' ||
-      (yearFilter === '2020-2024' && vehicle.year >= 2020) ||
-      (yearFilter === '2018-2019' && vehicle.year >= 2018 && vehicle.year <= 2019) ||
-      (yearFilter === '2015-2017' && vehicle.year >= 2015 && vehicle.year <= 2017);
+  const filteredVehicles = vehicles.filter((vehicle) => {
+    const matchesSearch =
+      searchTerm === "" ||
+      `${vehicle.make} ${vehicle.model} ${vehicle.year}`
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
+    const matchesMake = makeFilter === "all" || vehicle.make === makeFilter;
+
+    const matchesPrice =
+      priceFilter === "all" ||
+      (priceFilter === "under-5m" && vehicle.price < 5000000) ||
+      (priceFilter === "5m-10m" &&
+        vehicle.price >= 5000000 &&
+        vehicle.price <= 10000000) ||
+      (priceFilter === "10m-15m" &&
+        vehicle.price >= 10000000 &&
+        vehicle.price <= 15000000) ||
+      (priceFilter === "over-15m" && vehicle.price > 15000000);
+
+    const matchesYear =
+      yearFilter === "all" ||
+      (yearFilter === "2020-2024" && vehicle.year >= 2020) ||
+      (yearFilter === "2018-2019" &&
+        vehicle.year >= 2018 &&
+        vehicle.year <= 2019) ||
+      (yearFilter === "2015-2017" &&
+        vehicle.year >= 2015 &&
+        vehicle.year <= 2017);
 
     return matchesSearch && matchesMake && matchesPrice && matchesYear;
   });
 
   const clearFilters = () => {
-    setSearchTerm('');
-    setMakeFilter('all');
-    setPriceFilter('all');
-    setYearFilter('all');
+    setSearchTerm("");
+    setMakeFilter("all");
+    setPriceFilter("all");
+    setYearFilter("all");
   };
 
   return (
@@ -75,7 +95,8 @@ export default function InventoryPage() {
               Vehicle Inventory
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Browse our complete collection of quality vehicles, all thoroughly inspected and ready for delivery
+              Browse our complete collection of quality vehicles, all thoroughly
+              inspected and ready for delivery
             </p>
           </div>
 
@@ -104,8 +125,10 @@ export default function InventoryPage() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">All Makes</SelectItem>
-                    {uniqueMakes.map(make => (
-                      <SelectItem key={make} value={make}>{make}</SelectItem>
+                    {uniqueMakes.map((make) => (
+                      <SelectItem key={make} value={make}>
+                        {make}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -169,9 +192,11 @@ export default function InventoryPage() {
                   className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
                 >
                   <div className="relative overflow-hidden">
-                    <img
-                      src={vehicle.image}
+                    <Image
+                      src={vehicle.image[0]}
                       alt={`${vehicle.make} ${vehicle.model}`}
+                      width={600} // Example width, you can adjust this
+                      height={400} // Example height, you can adjust this
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     {vehicle.featured && (
@@ -179,17 +204,20 @@ export default function InventoryPage() {
                         Featured
                       </Badge>
                     )}
-                    <Badge 
+                    <Badge
                       className={`absolute top-4 right-4 ${
-                        vehicle.availability === 'available' 
-                          ? 'bg-green-600' 
-                          : vehicle.availability === 'reserved'
-                          ? 'bg-yellow-600'
-                          : 'bg-red-600'
+                        vehicle.availability === "available"
+                          ? "bg-green-600"
+                          : vehicle.availability === "reserved"
+                          ? "bg-yellow-600"
+                          : "bg-red-600"
                       }`}
                     >
-                      {vehicle.availability === 'available' ? 'Available' : 
-                       vehicle.availability === 'reserved' ? 'Reserved' : 'Sold'}
+                      {vehicle.availability === "available"
+                        ? "Available"
+                        : vehicle.availability === "reserved"
+                        ? "Reserved"
+                        : "Sold"}
                     </Badge>
                   </div>
 
@@ -221,7 +249,7 @@ export default function InventoryPage() {
                         variant="outline"
                         onClick={() => openVehicleModal(vehicle)}
                         className="hover:bg-orange-600 hover:text-white"
-                        disabled={vehicle.availability === 'sold'}
+                        disabled={vehicle.availability === "sold"}
                       >
                         <Eye className="w-4 h-4 mr-2" />
                         View Details
