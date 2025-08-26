@@ -40,7 +40,7 @@ export default function InventoryPage() {
   };
 
   // Get unique makes for filter
-  const uniqueMakes = [...new Set(vehicles.map((vehicle) => vehicle.make))];
+const uniqueMakes = Array.from(new Set(vehicles.map(vehicle => vehicle.make)));
 
   // Filter vehicles based on search and filters
   const filteredVehicles = vehicles.filter((vehicle) => {
